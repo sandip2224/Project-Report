@@ -1,0 +1,18 @@
+databases:
+  - name: db1
+    server: server1
+    database: database1
+    username: username1
+    password: password1
+  - name: db2
+    server: server2
+    database: database2
+    username: username2
+    password: password2
+
+email:
+  sender_email: your_email@example.com
+  receiver_email: recipient@example.com
+  email_password: your_email_password
+  smtp_server: smtp.example.com
+  smtp_port: 587
