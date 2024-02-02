@@ -32,4 +32,25 @@ while True:
 source_cursor.close()
 source_conn.close()
 dest_cursor.close()
-dest_conn.close()
+dest_conn.close
+
+# Fetch data in batches and insert into the destination table
+batch_size = 100
+while True:
+    rows = source_cursor.fetchmany(batch_size)
+    if not rows:
+        break
+    # Handle edge cases before executing executemany
+    processed_rows = []
+    for row in rows:
+        processed_row = []
+        for value in row:
+            if value is None:
+                processed_row.append(None)  # Convert None to NULL
+            elif isinstance(value, str) and len(value) > 255:
+                processed_row.append(value[:255])  # Truncate long strings
+            else:
+                processed_row.append(value)
+        processed_rows.append(processed_row)
+    dest_cursor.executemany(insert_query, processed_rows)
+    dest_conn.commit()
