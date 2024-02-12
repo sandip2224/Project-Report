@@ -119,3 +119,46 @@
 </body>
 
 </html>
+
+<!-- Trigger Button -->
+<button id="triggerBtn" class="mt-8 px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 mx-auto">Trigger Process</button>
+
+<!-- Confirmation Modal -->
+<div id="confirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <!-- Modal overlay -->
+        <div class="fixed inset-0 bg-black opacity-50"></div>
+        <!-- Modal content -->
+        <div class="bg-white rounded-lg overflow-hidden max-w-md mx-auto p-6">
+            <div class="text-center">
+                <h2 class="text-lg font-bold mb-4">Confirmation</h2>
+                <p class="text-gray-700 mb-6">Are you sure you want to trigger the process?</p>
+                <div class="flex justify-center">
+                    <button id="confirmBtn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-4">Confirm</button>
+                    <button id="cancelBtn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to handle modal -->
+<script>
+    // Show modal when trigger button is clicked
+    $('#triggerBtn').click(function() {
+        $('#confirmationModal').removeClass('hidden').addClass('flex');
+    });
+
+    // Hide modal when cancel button is clicked
+    $('#cancelBtn').click(function() {
+        $('#confirmationModal').removeClass('flex').addClass('hidden');
+    });
+
+    // Handle confirm button click (trigger the process)
+    $('#confirmBtn').click(function() {
+        // Make AJAX request to trigger process
+        // ...
+        // Close modal after process is triggered
+        $('#confirmationModal').removeClass('flex').addClass('hidden');
+    });
+</script>
