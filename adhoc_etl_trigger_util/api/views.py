@@ -15,19 +15,29 @@ def execute_steps(request):
     try:
         # Execute Step 1
         step1_success = execute_step1()
-
-        # Execute Step 2 only if Step 1 succeeds
         step2_success = False
+        step3_success = False
+
+        # Only proceed with Step 2 if Step 1 is successful
         if step1_success:
             step2_success = execute_step2()
 
-        # Execute Step 3 only if Step 2 succeeds
-        step3_success = False
+        # Only proceed with Step 3 if Step 2 is successful
         if step2_success:
             step3_success = execute_step3()
 
-        # Return the success status of each step in the JSON response
-        return JsonResponse({'success': True, 'step1_success': step1_success, 'step2_success': 'step2_success', 'step3_success': step3_success})
+        # Define the status of each step based on success or failure
+        step1_status = 'success' if step1_success else 'failure'
+        step2_status = 'success' if step2_success else 'failure' if step1_success else 'not_executed'
+        step3_status = 'success' if step3_success else 'failure' if step2_success else 'not_executed'
+
+        # Return the status of each step in the JSON response
+        return JsonResponse({
+            'success': True,
+            'step1_status': step1_status,
+            'step2_status': step2_status,
+            'step3_status': step3_status
+        })
 
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
