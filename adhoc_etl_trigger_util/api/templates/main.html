@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+  <!-- Include Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+
+</head>
+
+<body class="bg-gray-100">
+
+  <nav class="bg-gray-800 p-4">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <!-- Branding / Logo -->
+          <a href="#" class="text-white text-2xl font-bold">Your App</a>
+        </div>
+        <div>
+          <!-- Navbar items -->
+          <ul class="flex space-x-4">
+            <!-- Load Stepper Component -->
+            <li>
+              <a href="#" class="text-white hover:text-gray-300">Stepper</a>
+            </li>
+            <!-- Load Table 1 -->
+            <li>
+              <a href="/table1" class="text-white hover:text-gray-300">Table 1</a>
+            </li>
+            <!-- Load Table 2 -->
+            <li>
+              <a href="/table2" class="text-white hover:text-gray-300">Table 2</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  {% csrf_token %}
+  <div class="min-h-screen flex flex-col justify-center items-center">
+    <h1 class="text-3xl font-bold mb-8">Main Page</h1>
+
+    <!-- Stepper Component -->
+    <div id="stepper" class="w-full max-w-md">
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center">
+          <div id="step1" class="h-8 w-8 rounded-full flex items-center justify-center bg-gray-300 text-gray-700">1
+          </div>
+          <span class="ml-2 text-gray-700">Step 1</span>
+        </div>
+        <div class="h-px bg-gray-300 flex-1"></div>
+      </div>
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center">
+          <div id="step2" class="h-8 w-8 rounded-full flex items-center justify-center bg-gray-300 text-gray-700">2
+          </div>
+          <span class="ml-2 text-gray-700">Step 2</span>
+        </div>
+        <div class="h-px bg-gray-300 flex-1"></div>
+      </div>
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <div id="step3" class="h-8 w-8 rounded-full flex items-center justify-center bg-gray-300 text-gray-700">3
+          </div>
+          <span class="ml-2 text-gray-700">Step 3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger Button -->
+    <button id="triggerBtn" class="mt-8 px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600">Trigger
+      Process</button>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#triggerBtn').click(function () {
+        // Make AJAX request to trigger process execution
+        $.ajax({
+          type: 'GET',
+          url: '/execute-steps/', // Adjust the URL to your backend endpoint
+          success: function (response) {
+            // Update the stepper based on the response
+            if (response.success) {
+              $('#step1').removeClass('bg-gray-300').addClass(response.step1_success ? 'bg-blue-500' : 'bg-red-500').text(response.step1_success ? '✓' : '✗');
+              $('#step2').removeClass('bg-gray-300').addClass(response.step2_success ? 'bg-blue-500' : 'bg-red-500').text(response.step2_success ? '✓' : '✗');
+              $('#step3').removeClass('bg-gray-300').addClass(response.step3_success ? 'bg-blue-500' : 'bg-red-500').text(response.step3_success ? '✓' : '✗');
+            } else {
+              alert('An error occurred while executing the steps: ' + response.error); // Show error message
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('An error occurred while processing your request.'); // Show generic error message
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

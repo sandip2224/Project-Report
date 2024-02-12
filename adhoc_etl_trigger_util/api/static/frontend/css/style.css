@@ -1,0 +1,51 @@
+/* Stepper styles */
+.stepper {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.stepper li {
+  display: inline-block;
+  width: calc(100% / 3); /* Divide the width evenly among the steps */
+  text-align: center;
+  position: relative;
+  color: #6c757d; /* Bootstrap's secondary color */
+}
+
+.stepper li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 10px); /* Set the width of the line */
+  height: 2px;
+  background-color: #6c757d; /* Bootstrap's secondary color */
+}
+
+.stepper li:first-child::before {
+  display: none; /* Hide the line before the first step */
+}
+
+.stepper li.active {
+  color: #007bff; /* Bootstrap's primary color */
+}
+
+.stepper li.active::after {
+  background-color: #007bff; /* Bootstrap's primary color */
+}
+
+.stepper li.complete {
+  color: #28a745; /* Bootstrap's success color */
+}
+
+.stepper li.complete::after {
+  background-color: #28a745; /* Bootstrap's success color */
+}
+
+.stepper li span {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
